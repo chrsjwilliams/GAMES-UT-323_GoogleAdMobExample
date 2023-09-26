@@ -1,1 +1,1 @@
-# GoogleAdMobSample
+# GoogleAdMobExample
