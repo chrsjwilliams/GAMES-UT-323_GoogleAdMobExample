@@ -19,7 +19,7 @@ public class GoogleAdMobController : MonoBehaviour
     private bool _isInitialized = false;
     private List<string> _deviceIds;
 
-    // These ad units are configured to always serve test ads.
+    // These ad units are configured to serve test ads.
 #if UNITY_ANDROID
     private string _bannerAdUnitId = "ca-app-pub-3940256099942544/6300978111";
     private string _interstitialAdUnitId = "ca-app-pub-3940256099942544/1033173712";
@@ -80,7 +80,6 @@ public class GoogleAdMobController : MonoBehaviour
             Debug.Log("[AdMob Controller] Google Mobile Ads Initialized");
 
             // After Mobile ads have been initialized load ads
-            LoadLoadInterstitialAd();
             LoadRewardedAd();
         });
     }
@@ -167,7 +166,7 @@ public class GoogleAdMobController : MonoBehaviour
     #endregion
 
     #region Interstitial Ads
-    private void LoadLoadInterstitialAd()
+    public void ShowInterstitialAd()
     {
         // Clean up the old ad before loading a new one.
         if (_interstitialAd != null)
@@ -198,24 +197,9 @@ public class GoogleAdMobController : MonoBehaviour
 
                 _interstitialAd = ad;
                 RegisterInterstitialEventHandlers(_interstitialAd);
+                _interstitialAd.Show();
             });
     }
-
-
-    public void ShowInterstitialAd()
-    {
-        if (_interstitialAd != null && _interstitialAd.CanShowAd())
-        {
-            Debug.Log("[AdMob Controller] Showing interstitial ad.");
-            _interstitialAd.Show();
-            LoadLoadInterstitialAd();
-        }
-        else
-        {
-            Debug.LogError("[AdMob Controller] Interstitial ad is not ready yet.");
-        }
-    }
-
 
     private void RegisterInterstitialEventHandlers(InterstitialAd interstitialAd)
     {
